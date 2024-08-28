@@ -17,8 +17,11 @@ public class LineLoginSecurityConfig {
         httpSecurity
                 .authorizeHttpRequests((authenticate) ->
                         authenticate
-                                .anyRequest()
-                                .authenticated())
+                                .requestMatchers("/api/hello-word").authenticated()
+                                .requestMatchers("/api/app").authenticated()
+                                .requestMatchers("/api/app/info-oauth").authenticated()
+                                .requestMatchers("/api/logout").permitAll()
+                                )
                 .oauth2Login(withDefaults()); // for allowed oauth2 render to line login template
         return httpSecurity.build();
     }

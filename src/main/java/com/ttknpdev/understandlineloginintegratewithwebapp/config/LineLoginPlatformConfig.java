@@ -31,11 +31,13 @@ public class LineLoginPlatformConfig {
         return new InMemoryClientRegistrationRepository(this.lineClientRegistration());
     }
 
-    /*หรือเราอาจจะใช้ Spring Boot Auto-configuration ด้วยการกำหนดค่าต่างๆ ใน application.yml (หรือ application.properties) มาแทน Spring Security config เพือให้ Spring Boot สร้าง configuration ให้กับ Application เราเองโดยอัตโนมัติ*/
+    /*
+        May can use Spring Boot Auto-configuration set all detail on application.yml, application.properties
+    */
     private ClientRegistration lineClientRegistration() {
         return ClientRegistration.withRegistrationId("line")
-                .clientId(clientId) // ใช้ LINE Login Channel ID
-                .clientSecret(clientSecret) // ใช้ LINE Login Channel Secret
+                .clientId(clientId) // Using LINE Login Channel ID
+                .clientSecret(clientSecret) // Using LINE Login Channel Secret
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 // same call back
@@ -46,7 +48,7 @@ public class LineLoginPlatformConfig {
                 .tokenUri("https://api.line.me/oauth2/v2.1/token")
                 .jwkSetUri("https://api.line.me/oauth2/v2.1/verify")
                 .userNameAttributeName("userId")
-                .userInfoUri("https://api.line.me/v2/profile") // ใช้สำหรับขอข้อมูล User ด้วย access token กับ Social API
+                .userInfoUri("https://api.line.me/v2/profile") // Use take infor  of User by access token กับ Social API
                 .clientName("LINE")
                 .build();
     }

@@ -24,10 +24,23 @@ public class LineLoginTemplateControl {
         logback = new Logback(LineLoginTemplateControl.class);
     }
 
+    @GetMapping("/logout")
+    public String logoutPage(Model model) {
+        return "logout";
+    }
+
+
+    @GetMapping("/hello-word")
+    public String helloWordPage(@AuthenticationPrincipal OAuth2User oauth2User,Model model) {
+        model.addAttribute("message", "Hello World");
+        return "hello-word";
+    }
+
     @GetMapping("/app")
-    public String index(Model model,
+    public String indexPage(Model model,
                         @RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient authorizedClient,
                         @AuthenticationPrincipal OAuth2User oauth2User) {
+        // model can call in index.html
         model.addAttribute("userName", oauth2User.getName());
         model.addAttribute("clientName", authorizedClient.getClientRegistration().getClientName());
         model.addAttribute("userAttributes", oauth2User.getAttributes());
@@ -57,14 +70,92 @@ public class LineLoginTemplateControl {
         return "index";
     }
 
-    @GetMapping("/app/test")
-    public ResponseEntity index2(
+    @GetMapping("/app/info-oauth")
+    public ResponseEntity infoOauth2(
             @RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient authorizedClient,
             @AuthenticationPrincipal OAuth2User oauth2User) {
         Map<String, Object> map = new HashMap<>();
         map.put("authorizedClient", authorizedClient);
         map.put("oauth2User", oauth2User);
         return ResponseEntity.ok(map);
+        /*
+        "oauth2User": {
+            "authorities": [
+                {
+                    "authority": "OAUTH2_USER",
+                    "attributes": {
+                        "userId": "**",
+                        "displayName": "thitikorn🏜",
+                        "statusMessage": "just keep practicing.",
+                        "pictureUrl": "https://profile.line-scdn.net/0h50iEQaY8ah9EPH9RgcAUYDRsaXVnTTMNPwokfnI1Y3t7DHhKbA9xLXM5Znh_C35BaF4mKyM0NyxILx15WmqWK0MMNy54CyxJblgt_w"
+                    }
+                },
+                {
+                    "authority": "SCOPE_profile"
+                }
+            ],
+            "attributes": {
+                "userId": "**",
+                "displayName": "thitikorn🏜",
+                "statusMessage": "just keep practicing.",
+                "pictureUrl": "https://profile.line-scdn.net/0h50iEQaY8ah9EPH9RgcAUYDRsaXVnTTMNPwokfnI1Y3t7DHhKbA9xLXM5Znh_C35BaF4mKyM0NyxILx15WmqWK0MMNy54CyxJblgt_w"
+            },
+            "name": "**"
+        }
+     ],
+      "authorizedClient": {
+        "clientRegistration": {
+            "registrationId": "line",
+            "clientId": "**",
+            "clientSecret": "**",
+            "clientAuthenticationMethod": {
+                "value": "client_secret_post"
+            },
+            "authorizationGrantType": {
+                "value": "authorization_code"
+            },
+            "redirectUri": "http://localhost:8080/login/oauth2/code/whatever",
+            "scopes": [
+                "profile",
+                "OPENID_CONNECT",
+                "OC_EMAIL"
+            ],
+            "providerDetails": {
+                "authorizationUri": "https://access.line.me/oauth2/v2.1/authorize",
+                "tokenUri": "https://api.line.me/oauth2/v2.1/token",
+                "userInfoEndpoint": {
+                    "uri": "https://api.line.me/v2/profile?scope=OPENID_CONNECT",
+                    "authenticationMethod": {
+                        "value": "header"
+                    },
+                    "userNameAttributeName": "userId"
+                        },
+                        "jwkSetUri": "https://api.line.me/oauth2/v2.1/verify",
+                        "issuerUri": null,
+                        "configurationMetadata": {}
+                    },
+                    "clientName": "LINE"
+                },
+                "principalName": "**",
+                "accessToken": {
+                    "tokenValue": "**",
+                    "issuedAt": "2024-08-24T09:33:28.167863800Z",
+                    "expiresAt": "2024-09-23T09:33:28.167863800Z",
+                    "tokenType": {
+                        "value": "Bearer"
+                    },
+                    "scopes": [
+                        "profile"
+                    ]
+                },
+                "refreshToken": {
+                    "tokenValue": "**",
+                    "issuedAt": "2024-08-24T09:33:28.167863800Z",
+                    "expiresAt": null
+                }
+            }
+        }
 
+    */
     }
 }
