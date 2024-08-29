@@ -10,7 +10,7 @@ import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 
 @Configuration
-public class LineLoginPlatformConfig {
+public class LineLoginConfig {
 
 
     private String clientId;
@@ -20,7 +20,7 @@ public class LineLoginPlatformConfig {
     private String pathRedirect;
 
     // work for import like key classpath as spring.config.import=classpath:<Path> another case won work
-    public LineLoginPlatformConfig(@Value("${CLIENT.ID}") String clientId,@Value("${CLIENT.SECRET.ID}") String clientSecret,@Value("${PATH.REDIRECT}") String pathRedirect) {
+    public LineLoginConfig(@Value("${CLIENT.ID}") String clientId, @Value("${CLIENT.SECRET.ID}") String clientSecret, @Value("${PATH.REDIRECT}") String pathRedirect) {
         this.clientId = clientId;
         this.clientSecret = clientSecret;
         this.pathRedirect = pathRedirect;

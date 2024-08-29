@@ -10,17 +10,18 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
-public class LineLoginSecurityConfig {
+public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .authorizeHttpRequests((authenticate) ->
                         authenticate
-                                .requestMatchers("/api/hello-word").authenticated()
-                                .requestMatchers("/api/app").authenticated()
-                                .requestMatchers("/api/app/info-oauth").authenticated()
+                                .requestMatchers("/api/hello-world").permitAll()
+                                .requestMatchers("/api/app/**").authenticated()
                                 .requestMatchers("/api/logout").permitAll()
+                                // for my static folder
+                                .requestMatchers("/resources/**", "/bootstrap/**", "/static/**", "/css/**", "/js/**").permitAll()
                                 )
                 .oauth2Login(withDefaults()); // for allowed oauth2 render to line login template
         return httpSecurity.build();

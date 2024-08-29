@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,8 +31,8 @@ public class LineLoginTemplateControl {
     }
 
 
-    @GetMapping("/hello-word")
-    public String helloWordPage(@AuthenticationPrincipal OAuth2User oauth2User,Model model) {
+    @GetMapping("/hello-world")
+    public String helloWordPage(Model model) {
         model.addAttribute("message", "Hello World");
         return "hello-word";
     }
@@ -73,7 +74,10 @@ public class LineLoginTemplateControl {
     @GetMapping("/app/info-oauth")
     public ResponseEntity infoOauth2(
             @RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient authorizedClient,
-            @AuthenticationPrincipal OAuth2User oauth2User) {
+            @AuthenticationPrincipal OAuth2User oauth2User,
+            Principal user) {
+
+        logback.log.warn("user {}",user);
         Map<String, Object> map = new HashMap<>();
         map.put("authorizedClient", authorizedClient);
         map.put("oauth2User", oauth2User);
